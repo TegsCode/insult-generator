@@ -1,0 +1,6 @@
+{
+  "name": "The Grand Lexicon of Calumny - Historical English Insult Generator",
+  "description": "Assemble bespoke, devastating historical English insults from the Elizabethan, Georgian, and Victorian eras based on traits like laziness, nonsense, and vibe.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
