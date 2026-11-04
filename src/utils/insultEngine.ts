@@ -148,72 +148,72 @@ export interface PresetArchetype {
 export const ARCHETYPE_PRESETS: PresetArchetype[] = [
   {
     id: 'lazy_coworker',
-    name: 'The Loafing Colleague',
-    subtitle: 'Bed-Presser & Task-Shirker',
-    description: 'Specialized for whoever disappears when the hard labor begins.',
+    name: 'The Slacker Coworker',
+    subtitle: 'Always Missing When Work Starts',
+    description: 'For the coworker who vanishes the second there is actual work to do.',
     settings: {
       lazinessLevel: 4,
       nonsenseLevel: 1,
       vibe: 'sour',
       era: 'elizabethan',
       venom: 'courtly',
-      targetName: 'Colleague'
+      targetName: 'Coworker'
     }
   },
   {
     id: 'gasconading_braggart',
     name: 'The Endless Yapper',
-    subtitle: 'Geyser of Balderdash',
-    description: 'For the individual whose mouth moves forty leagues ahead of their brain.',
+    subtitle: 'All Talk, Zero Substance',
+    description: 'For the person who talks for forty minutes without saying a single useful thing.',
     settings: {
       lazinessLevel: 2,
       nonsenseLevel: 4,
       vibe: 'pompous',
       era: 'georgian',
       venom: 'scathing',
-      targetName: 'Sir Braggart'
+      targetName: 'The Meeting Yapper'
     }
   },
   {
     id: 'pompous_aristocrat',
-    name: 'The Haughty Popinjay',
-    subtitle: 'Perfumed Snob',
-    description: 'For someone putting on unearned airs and snooty superior manners.',
+    name: 'The Arrogant Snob',
+    subtitle: 'Thinks They Are Better Than You',
+    description: 'For someone who acts high-and-mighty with zero accomplishments to back it up.',
     settings: {
       lazinessLevel: 3,
       nonsenseLevel: 3,
       vibe: 'pompous',
       era: 'victorian',
       venom: 'courtly',
-      targetName: 'Lord Sneer'
+      targetName: 'The Snob'
     }
   },
   {
     id: 'tavern_drunkard',
-    name: 'The Ale-Knight',
-    subtitle: 'Pot-Valiant Rakehell',
-    description: 'For the disorderly friend who makes terrible decisions under the influence.',
+    name: 'The Rowdy Party Animal',
+    subtitle: 'Loud & Sloppy After Two Drinks',
+    description: 'For the friend who gets way too loud and creates scenes on a night out.',
     settings: {
       lazinessLevel: 3,
       nonsenseLevel: 2,
       vibe: 'debauched',
       era: 'jacobean',
       venom: 'scathing',
-      targetName: 'Sir Drink-a-Lot'
+      targetName: 'The Messy Friend'
     }
   },
   {
     id: 'cheapskate_miser',
-    name: 'The Penny-Squeezer',
-    subtitle: 'Nip-Cheese Skinflint',
-    description: 'For the friend who calculates the bill down to three pence.',
+    name: 'The Penny-Pinching Cheapskate',
+    subtitle: 'Splits the Bill Down to 3 Cents',
+    description: 'For the friend who always disappears when it is their turn to pay.',
     settings: {
       lazinessLevel: 1,
       nonsenseLevel: 2,
       vibe: 'miserly',
       era: 'medieval',
       venom: 'scathing',
-      targetName: 'Master Skinflint'
+      targetName: 'The Cheapskate'
     }
   }
 ];

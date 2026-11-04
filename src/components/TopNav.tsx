@@ -29,10 +29,10 @@ export const TopNav: React.FC<TopNavProps> = ({
             onClick={() => setActiveTab('assembler')}
             className="text-left font-cinzel text-lg sm:text-xl font-bold tracking-tight text-stone-900 dark:text-stone-100 hover:text-amber-800 dark:hover:text-amber-400 transition-colors whitespace-nowrap shrink-0"
           >
-            The Grand Lexicon of Calumny
+            Historical English Insult Generator
           </button>
 
-          {/* Zone 2: 4 clean single-line text navigation links */}
+          {/* Zone 2: 4 clean single-line text navigation links in modern English */}
           <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-stone-700 dark:text-stone-300">
             <button
               onClick={() => setActiveTab('assembler')}
@@ -42,7 +42,7 @@ export const TopNav: React.FC<TopNavProps> = ({
                   : 'border-transparent text-stone-600 dark:text-stone-400'
               }`}
             >
-              Burn Assembler
+              Insult Generator
             </button>
             <button
               onClick={() => setActiveTab('duel')}
@@ -52,7 +52,7 @@ export const TopNav: React.FC<TopNavProps> = ({
                   : 'border-transparent text-stone-600 dark:text-stone-400'
               }`}
             >
-              Wit Duel Arena
+              Insult Battle Game
             </button>
             <button
               onClick={() => setActiveTab('translator')}
@@ -62,7 +62,7 @@ export const TopNav: React.FC<TopNavProps> = ({
                   : 'border-transparent text-stone-600 dark:text-stone-400'
               }`}
             >
-              Modern Grievances
+              Modern Annoyances
             </button>
             <button
               onClick={() => setActiveTab('codex')}
@@ -72,7 +72,7 @@ export const TopNav: React.FC<TopNavProps> = ({
                   : 'border-transparent text-stone-600 dark:text-stone-400'
               }`}
             >
-              Lexicon Codex
+              Historical Dictionary
             </button>
           </nav>
 
@@ -80,9 +80,9 @@ export const TopNav: React.FC<TopNavProps> = ({
           <div className="flex items-center gap-3 shrink-0">
             <button
               onClick={onOpenGrimoire}
-              aria-label="View Saved Grimoire"
+              aria-label="View Saved Burns"
               className="relative p-2 text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white transition-colors"
-              title="Saved Burns & Warrants"
+              title="Saved Insults"
             >
               <BookOpen className="w-5 h-5" />
               {savedCount > 0 && (
@@ -105,7 +105,7 @@ export const TopNav: React.FC<TopNavProps> = ({
               className="px-4 py-2 text-xs font-semibold text-amber-50 bg-stone-900 dark:bg-amber-900/90 dark:text-amber-100 rounded-md hover:bg-stone-800 dark:hover:bg-amber-800 transition-colors whitespace-nowrap shrink-0 shadow-sm flex items-center gap-1.5"
             >
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Forge Instant Burn</span>
+              <span>Random Burn</span>
             </button>
           </div>
         </div>

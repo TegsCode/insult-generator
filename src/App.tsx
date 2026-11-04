@@ -153,13 +153,13 @@ export default function App() {
         {/* Curatorial Editorial Marquee */}
         <section className="text-center max-w-3xl mx-auto space-y-3">
           <div className="text-xs font-cinzel uppercase tracking-widest text-amber-900 dark:text-amber-400 font-bold">
-            Archival Slander · Est. 1590
+            Historical Roasts & Satires · 1380 to 1880
           </div>
           <h1 className="font-cinzel text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-stone-900 dark:text-stone-100 leading-tight">
-            The Historical English Insult Generator
+            Historical English Insult Generator
           </h1>
           <p className="font-editorial italic text-lg sm:text-xl text-stone-700 dark:text-stone-300 leading-relaxed max-w-2xl mx-auto">
-            Calibrate an offender’s laziness, bluster, and disposition to synthesize a hyper-specific, historically attested period burn with full etymological breakdown.
+            Choose their level of laziness, how much nonsense they talk, or their overall vibe in modern English to assemble a hyper-specific, historically authentic old-school burn.
           </p>
 
           {/* Interactive Workspace Navigation Tabs */}
@@ -173,7 +173,7 @@ export default function App() {
                     : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white'
                 }`}
               >
-                Burn Assembler
+                Insult Generator
               </button>
               <button
                 onClick={() => setActiveTab('duel')}
@@ -183,7 +183,7 @@ export default function App() {
                     : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white'
                 }`}
               >
-                Wit Duel Arena
+                Insult Battle Game
               </button>
               <button
                 onClick={() => setActiveTab('translator')}
@@ -193,7 +193,7 @@ export default function App() {
                     : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white'
                 }`}
               >
-                Modern Grievances
+                Modern Annoyances
               </button>
               <button
                 onClick={() => setActiveTab('codex')}
@@ -203,7 +203,7 @@ export default function App() {
                     : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white'
                 }`}
               >
-                Lexicon Codex
+                Historical Dictionary
               </button>
             </div>
           </div>

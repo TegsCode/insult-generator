@@ -127,10 +127,10 @@ export const WitDuelArena: React.FC = () => {
           <div>
             <h2 className="font-cinzel text-xl font-bold flex items-center gap-2">
               <Swords className="w-5 h-5 text-amber-400" />
-              <span>The Wit Duel Arena</span>
+              <span>Historical Insult Battle Arena</span>
             </h2>
-            <p className="text-xs text-stone-400 mt-1 max-w-xl">
-              Step into the 17th-century tavern of verbal honor. Read your haughty rival’s attack, pinpoint their fatal trait flaw, and unleash the most devastating historical counter-calumny!
+            <p className="text-xs text-stone-300 mt-1 max-w-xl">
+              Go head-to-head with historical snobs and blowhards. Read your opponent’s insult, identify their personality flaw, and select the best counter-roast to win the crowd’s favor!
             </p>
           </div>
 
@@ -174,7 +174,7 @@ export const WitDuelArena: React.FC = () => {
             <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
               <div>
                 <span className="text-[11px] uppercase tracking-widest text-stone-500 font-sans block mb-1">
-                  Opponent’s Opening Salvo
+                  Opponent’s Opening Insult:
                 </span>
                 <blockquote className="font-editorial text-lg text-stone-900 dark:text-stone-100 italic leading-snug">
                   {opponent.taunt}
@@ -184,7 +184,7 @@ export const WitDuelArena: React.FC = () => {
               <div className="p-3 bg-amber-50 dark:bg-amber-950/40 border border-amber-900/20 rounded-md text-xs text-amber-900 dark:text-amber-200 flex items-start gap-2">
                 <ShieldAlert className="w-4 h-4 shrink-0 mt-0.5 text-amber-700 dark:text-amber-400" />
                 <div>
-                  <strong>Tactical Vulnerability:</strong> {opponent.vulnerability}
+                  <strong>Their Personality Flaw:</strong> {opponent.vulnerability}
                 </div>
               </div>
             </div>
@@ -194,8 +194,8 @@ export const WitDuelArena: React.FC = () => {
           <div className="md:col-span-7 flex flex-col justify-between space-y-4">
             <div className="bg-white dark:bg-stone-900 border border-stone-300 dark:border-stone-800 rounded-lg p-6 space-y-4 shadow-sm">
               <div className="flex items-center justify-between">
-                <span className="text-xs uppercase tracking-widest text-stone-500 font-sans">
-                  Select Your Counter-Blow (Round {currentOpponentIdx + 1} of {OPPONENTS.length})
+                <span className="text-xs uppercase tracking-widest text-stone-500 font-sans font-semibold">
+                  Select Your Counter-Roast (Round {currentOpponentIdx + 1} of {OPPONENTS.length})
                 </span>
               </div>
 
@@ -203,13 +203,13 @@ export const WitDuelArena: React.FC = () => {
                 <div className="p-6 bg-amber-50 dark:bg-stone-800 border border-amber-800/20 rounded-lg text-center space-y-2 animate-in fade-in duration-300">
                   <Award className="w-8 h-8 text-amber-800 dark:text-amber-400 mx-auto" />
                   <h4 className="font-cinzel font-bold text-stone-900 dark:text-stone-100 text-lg">
-                    The Assembly Reacts!
+                    The Crowd Reacts!
                   </h4>
                   <p className="font-editorial italic text-base text-stone-800 dark:text-stone-200">
                     {currentVerdict}
                   </p>
                   <span className="text-xs text-stone-400 block pt-2">
-                    Summoning next rival to the floor...
+                    Next challenger stepping forward...
                   </span>
                 </div>
               ) : (
@@ -220,8 +220,8 @@ export const WitDuelArena: React.FC = () => {
                       onClick={() => handleChooseRetort(retort)}
                       className="w-full text-left p-4 rounded-md border border-stone-200 dark:border-stone-800 hover:border-amber-800 dark:hover:border-amber-600 bg-stone-50/70 dark:bg-stone-800/40 hover:bg-amber-50/50 dark:hover:bg-amber-950/20 transition-all group"
                     >
-                      <div className="text-[11px] text-amber-900 dark:text-amber-400 font-medium mb-1">
-                        Strategy: {retort.traitCounter}
+                      <div className="text-[11px] text-amber-900 dark:text-amber-400 font-semibold mb-1">
+                        Tactical Strategy: {retort.traitCounter}
                       </div>
                       <div className="font-editorial text-base text-stone-900 dark:text-stone-100 group-hover:text-amber-950 dark:group-hover:text-amber-200 leading-normal">
                         {retort.text}
@@ -239,20 +239,20 @@ export const WitDuelArena: React.FC = () => {
           <Trophy className="w-12 h-12 text-amber-700 dark:text-amber-400 mx-auto" />
           <div>
             <h3 className="font-cinzel text-2xl font-bold text-stone-900 dark:text-stone-100">
-              The Court Proclaims Thy Triumph!
+              Duel Completed!
             </h3>
             <p className="font-editorial text-xl italic text-stone-700 dark:text-stone-300 mt-1">
-              Final Eloquence Standing: {playerScore} / 6 Points
+              Final Crowd Standing: {playerScore} / 6 Points
             </p>
-            <p className="text-xs text-stone-500 dark:text-stone-400 mt-2 max-w-md mx-auto">
+            <p className="text-xs text-stone-600 dark:text-stone-400 mt-2 max-w-md mx-auto">
               {playerScore >= 5
-                ? 'Thy venomous wit hath reduced London’s finest blowhards to stammering heaps of humiliation. Thou art crowned Master of Scorn!'
-                : 'Thou hast survived the fray, though a few stray cups were flung at thy doublet. Return to the Forge and sharpen thy lexicon!'}
+                ? 'Your razor-sharp historical wit completely destroyed your rivals. The entire room is roaring in applause!'
+                : 'You survived the duel, but your opponent landed a few solid blows. Head back to the generator to sharpen your vocabulary!'}
             </p>
           </div>
 
           <div className="max-w-md mx-auto text-left text-xs bg-stone-50 dark:bg-stone-800/50 p-4 rounded-md border border-stone-200 dark:border-stone-800 space-y-1">
-            <div className="font-semibold text-stone-700 dark:text-stone-300 mb-1">Duel Chronicle:</div>
+            <div className="font-semibold text-stone-700 dark:text-stone-300 mb-1">Match History:</div>
             {roundHistory.map((h, i) => (
               <div key={i} className="text-stone-600 dark:text-stone-400">
                 · {h}
@@ -260,13 +260,30 @@ export const WitDuelArena: React.FC = () => {
             ))}
           </div>
 
-          <button
-            onClick={handleRestart}
-            className="px-6 py-2.5 bg-stone-900 dark:bg-amber-900 text-amber-50 rounded-md font-cinzel font-bold text-xs uppercase tracking-wider hover:bg-stone-800 transition-colors inline-flex items-center gap-2"
-          >
-            <RefreshCcw className="w-4 h-4" />
-            <span>Engage Another Duel</span>
-          </button>
+          <div className="flex items-center justify-center gap-3 pt-2">
+            {/* Share score on X */}
+            <a
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                `🏆 Scored ${playerScore}/6 in the Historical Insult Battle! Traded 17th-century burns with haughty London aristocrats.\n\n#HistoricalInsult #OldSchoolBurn`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-2.5 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 border border-stone-300 dark:border-stone-700 text-stone-900 dark:text-stone-100 rounded-md font-medium text-xs flex items-center gap-1.5 transition-colors"
+            >
+              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+              <span>Share Score on X</span>
+            </a>
+
+            <button
+              onClick={handleRestart}
+              className="px-6 py-2.5 bg-stone-900 dark:bg-amber-900 text-amber-50 rounded-md font-cinzel font-bold text-xs uppercase tracking-wider hover:bg-stone-800 transition-colors inline-flex items-center gap-2"
+            >
+              <RefreshCcw className="w-4 h-4" />
+              <span>Play Again</span>
+            </button>
+          </div>
         </div>
       )}
     </div>

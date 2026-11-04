@@ -35,10 +35,10 @@ export const CodexOfScoundrels: React.FC<CodexOfScoundrelsProps> = ({
       <div className="bg-white dark:bg-stone-900 border border-stone-300 dark:border-stone-800 rounded-lg p-6 space-y-2 shadow-sm">
         <h2 className="font-cinzel text-xl font-bold text-stone-900 dark:text-stone-100 flex items-center gap-2">
           <Book className="w-5 h-5 text-amber-800 dark:text-amber-400" />
-          <span>The Codex of Scoundrels & Archival Slurs</span>
+          <span>Historical Insult Dictionary & Glossary</span>
         </h2>
-        <p className="text-xs text-stone-500 dark:text-stone-400">
-          A scholarly compendium of verified English calumnies from 1380 to 1880, drawn from Shakespeare, Chaucer, Francis Grose’s 1811 Dictionary of the Vulgar Tongue, and Old Bailey broadsides.
+        <p className="text-xs text-stone-600 dark:text-stone-300">
+          Browse verified historical English insults from 1380 to 1880, drawn from Shakespeare, Chaucer, and Francis Grose’s 1811 slang dictionary. Click any word to forge an insult with it!
         </p>
       </div>
 
@@ -48,7 +48,7 @@ export const CodexOfScoundrels: React.FC<CodexOfScoundrelsProps> = ({
           <Search className="w-4 h-4 text-stone-400 absolute left-3 top-3" />
           <input
             type="text"
-            placeholder="Search archaic terms, modern meanings, or definitions (e.g. 'fopdoodle', 'lazy', 'gossip')..."
+            placeholder="Search archaic words or modern meanings (e.g., 'lazy', 'idiot', 'gossip', 'fopdoodle')..."
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
             className="w-full pl-9 pr-4 py-2 text-xs bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-md text-stone-900 dark:text-stone-100 placeholder:text-stone-400 focus:outline-none focus:ring-1 focus:ring-amber-800"

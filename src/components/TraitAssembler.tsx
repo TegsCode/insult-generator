@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dice5, Sparkles, SlidersHorizontal, RefreshCw } from 'lucide-react';
+import { Dice5, Sparkles, SlidersHorizontal } from 'lucide-react';
 import { Era, TraitSettings, VenomLevel, Vibe } from '../types/insult';
 import { ARCHETYPE_PRESETS, PresetArchetype } from '../utils/insultEngine';
 import { soundEffects } from '../utils/audioSpeech';
@@ -20,40 +20,40 @@ export const TraitAssembler: React.FC<TraitAssemblerProps> = ({
   onRandomize,
 }) => {
   const lazinessDescriptions = [
-    { label: 'Mild Dawdler', sub: 'Tardy loiterer, slow to stir' },
-    { label: 'Lethargic Drone', sub: 'Bench-polishing couch-louse' },
-    { label: 'Bed-Pressing Sluggard', sub: 'Mattress-worshipper & slug-a-bed' },
-    { label: 'Bone-Idle Fopdoodle', sub: 'Total paralysis of productive duty' },
+    { label: 'Mild Procrastinator', sub: 'Always dragging their feet and putting things off' },
+    { label: 'Lazy Couch Potato', sub: 'Avoids any physical work and sits around all day' },
+    { label: 'Heavy Sleeper / Slacker', sub: 'Refuses to get out of bed before mid-afternoon' },
+    { label: 'Completely Useless Freeloader', sub: 'Does zero productive work whatsoever' },
   ];
 
   const nonsenseDescriptions = [
-    { label: 'Idle Prattler', sub: 'Airy-worded clatterfart' },
-    { label: 'Purveyor of Moonshine', sub: 'Flummery-peddling bleater' },
-    { label: 'Windbag of Fustian', sub: 'Balderdash-spewing blatherskite' },
-    { label: 'Geyser of Balderdash', sub: 'Bedlam-witted torrent of rubbish' },
+    { label: 'Chatterbox / Yapper', sub: 'Never stops talking about trivial nonsense and drama' },
+    { label: 'Confidently Incorrect', sub: 'Spouts rumors and fake facts with complete confidence' },
+    { label: 'Loudmouth Windbag', sub: 'Uses fancy words and hot air to hide that they have no point' },
+    { label: 'Fountain of Pure Garbage', sub: 'Complete unhinged nonsense that hurts your brain to hear' },
   ];
 
   const vibes: { id: Vibe; label: string; desc: string }[] = [
-    { id: 'pompous', label: 'Pompous & Pretentious', desc: 'Silk-bedecked dandiprat' },
-    { id: 'debauched', label: 'Drunk & Debauched', desc: 'Pot-valiant ale-knight' },
-    { id: 'treacherous', label: 'Treacherous & Sneaky', desc: 'Viper-tongued jackanapes' },
-    { id: 'brainless', label: 'Gullible & Brainless', desc: 'Beef-witted mooncalf' },
-    { id: 'sour', label: 'Sour & Foul-Tempered', desc: 'Vinegar-faced curmudgeon' },
-    { id: 'miserly', label: 'Penny-Pinching Miser', desc: 'Griping nip-cheese skinflint' },
+    { id: 'pompous', label: 'Arrogant & Pretentious', desc: 'Thinks they are royalty, acts superior to everyone' },
+    { id: 'debauched', label: 'Loud & Rowdy Drunk', desc: 'Gets sloppy, loud, and disorderly after a few drinks' },
+    { id: 'treacherous', label: 'Two-Faced & Sneaky', desc: 'Smiles to your face, stabs you in the back' },
+    { id: 'brainless', label: 'Clueless & Dimwitted', desc: 'Not the sharpest tool in the shed, easily fooled' },
+    { id: 'sour', label: 'Bitter & Sour-Tempered', desc: 'Always scowling, grumpy, and ruining the mood' },
+    { id: 'miserly', label: 'Stingy Cheapskate', desc: 'Splits the bill to the cent, never buys a round' },
   ];
 
   const eras: { id: Era; label: string; period: string }[] = [
-    { id: 'elizabethan', label: 'Elizabethan', period: '1590s · Shakespeare' },
-    { id: 'jacobean', label: 'Restoration', period: '1660s · Wit & Cynicism' },
-    { id: 'georgian', label: 'Georgian / Regency', period: '1810s · Beau Brummell' },
-    { id: 'victorian', label: 'Victorian', period: '1880s · Icy Club Disdain' },
-    { id: 'medieval', label: 'Medieval', period: '1380s · Chaucerian Earth' },
+    { id: 'elizabethan', label: 'Shakespearean', period: '1590s · Theatrical poetry & drama' },
+    { id: 'jacobean', label: 'Restoration', period: '1660s · Sarcastic, cynical tavern barbs' },
+    { id: 'georgian', label: 'Georgian / Regency', period: '1810s · Posh Bridgerton-style snobbery' },
+    { id: 'victorian', label: 'Victorian', period: '1880s · Ice-cold passive-aggressive cruelty' },
+    { id: 'medieval', label: 'Medieval', period: '1380s · Gritty, raw tavern brawl burns' },
   ];
 
-  const venoms: { id: VenomLevel; label: string }[] = [
-    { id: 'gentle', label: 'Gentle Ribbing' },
-    { id: 'courtly', label: 'Courtly Slander' },
-    { id: 'scathing', label: 'Scathing Tavern Brawl' },
+  const venoms: { id: VenomLevel; label: string; sub: string }[] = [
+    { id: 'gentle', label: 'Playful Teasing', sub: 'Gentle ribbing between friends' },
+    { id: 'courtly', label: 'Classy Burn', sub: 'Sharp, elegant put-down' },
+    { id: 'scathing', label: 'Savage Takedown', sub: 'Full scorched-earth roast' },
   ];
 
   const handleSliderChange = (
@@ -72,10 +72,10 @@ export const TraitAssembler: React.FC<TraitAssemblerProps> = ({
           <div>
             <h3 className="font-cinzel text-base font-bold text-stone-900 dark:text-stone-100 flex items-center gap-2">
               <SlidersHorizontal className="w-4 h-4 text-amber-800 dark:text-amber-400" />
-              <span>Trait Calibrator</span>
+              <span>Select Personality Traits</span>
             </h3>
             <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
-              Tune your target’s vices to assemble a tailor-made period calumny.
+              Pick the specific vices of the person you want to roast in plain English.
             </p>
           </div>
 
@@ -85,7 +85,7 @@ export const TraitAssembler: React.FC<TraitAssemblerProps> = ({
               className="px-3 py-1.5 text-xs font-medium text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 border border-stone-300 dark:border-stone-700 rounded-md transition-colors flex items-center gap-1.5"
             >
               <Dice5 className="w-3.5 h-3.5" />
-              <span>Roll Dice</span>
+              <span>Randomize Traits</span>
             </button>
           </div>
         </div>
@@ -93,7 +93,7 @@ export const TraitAssembler: React.FC<TraitAssemblerProps> = ({
         {/* Archetype Quick Buttons */}
         <div className="pt-2 border-t border-stone-200 dark:border-stone-800">
           <span className="text-[11px] uppercase tracking-wider text-stone-400 dark:text-stone-500 font-sans block mb-2">
-            Historical Offender Archetypes
+            Quick Character Presets:
           </span>
           <div className="flex flex-wrap gap-1.5">
             {ARCHETYPE_PRESETS.map(archetype => (
@@ -113,9 +113,9 @@ export const TraitAssembler: React.FC<TraitAssemblerProps> = ({
       <div className="space-y-2">
         <div className="flex justify-between items-baseline">
           <label className="text-xs font-semibold uppercase tracking-wider text-stone-700 dark:text-stone-300">
-            Degree of Laziness & Sloth
+            1. How lazy are they?
           </label>
-          <span className="text-xs font-medium text-amber-900 dark:text-amber-400">
+          <span className="text-xs font-medium text-amber-900 dark:text-amber-400 font-semibold">
             {lazinessDescriptions[settings.lazinessLevel - 1].label}
           </span>
         </div>
@@ -128,14 +128,14 @@ export const TraitAssembler: React.FC<TraitAssemblerProps> = ({
           onChange={e => handleSliderChange('lazinessLevel', parseInt(e.target.value))}
           className="w-full accent-amber-800 dark:accent-amber-600 h-2 bg-stone-200 dark:bg-stone-800 rounded-lg cursor-pointer"
         />
-        <div className="flex justify-between text-[11px] text-stone-400 dark:text-stone-500 pt-0.5">
-          <span>Mild Dawdler</span>
-          <span>Lethargic Drone</span>
-          <span>Bed-Presser</span>
-          <span>Total Fopdoodle</span>
+        <div className="flex justify-between text-[11px] text-stone-500 dark:text-stone-400 pt-0.5">
+          <span>Mild Procrastinator</span>
+          <span>Couch Potato</span>
+          <span>Sleeps All Day</span>
+          <span>Total Freeloader</span>
         </div>
         <p className="text-xs text-stone-500 dark:text-stone-400 italic">
-          {lazinessDescriptions[settings.lazinessLevel - 1].sub}
+          &ldquo;{lazinessDescriptions[settings.lazinessLevel - 1].sub}&rdquo;
         </p>
       </div>
 
@@ -143,9 +143,9 @@ export const TraitAssembler: React.FC<TraitAssemblerProps> = ({
       <div className="space-y-2">
         <div className="flex justify-between items-baseline">
           <label className="text-xs font-semibold uppercase tracking-wider text-stone-700 dark:text-stone-300">
-            Volume of Nonsense & Hot Air
+            2. How much nonsense do they talk?
           </label>
-          <span className="text-xs font-medium text-amber-900 dark:text-amber-400">
+          <span className="text-xs font-medium text-amber-900 dark:text-amber-400 font-semibold">
             {nonsenseDescriptions[settings.nonsenseLevel - 1].label}
           </span>
         </div>
@@ -158,23 +158,23 @@ export const TraitAssembler: React.FC<TraitAssemblerProps> = ({
           onChange={e => handleSliderChange('nonsenseLevel', parseInt(e.target.value))}
           className="w-full accent-amber-800 dark:accent-amber-600 h-2 bg-stone-200 dark:bg-stone-800 rounded-lg cursor-pointer"
         />
-        <div className="flex justify-between text-[11px] text-stone-400 dark:text-stone-500 pt-0.5">
-          <span>Prattler</span>
-          <span>Moonshine</span>
-          <span>Windbag</span>
-          <span>Geyser of Tripe</span>
+        <div className="flex justify-between text-[11px] text-stone-500 dark:text-stone-400 pt-0.5">
+          <span>Chatterbox</span>
+          <span>Confidently Wrong</span>
+          <span>Loudmouth Windbag</span>
+          <span>Pure Garbage</span>
         </div>
         <p className="text-xs text-stone-500 dark:text-stone-400 italic">
-          {nonsenseDescriptions[settings.nonsenseLevel - 1].sub}
+          &ldquo;{nonsenseDescriptions[settings.nonsenseLevel - 1].sub}&rdquo;
         </p>
       </div>
 
       {/* Trait 3: Overall Vibe */}
       <div className="space-y-2">
         <label className="text-xs font-semibold uppercase tracking-wider text-stone-700 dark:text-stone-300 block">
-          Primary Demeanor & Vibe
+          3. What is their worst habit or vibe?
         </label>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
           {vibes.map(vibe => {
             const isSelected = settings.vibe === vibe.id;
             return (
@@ -190,8 +190,8 @@ export const TraitAssembler: React.FC<TraitAssemblerProps> = ({
                     : 'border-stone-200 dark:border-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-800'
                 }`}
               >
-                <div className="font-medium">{vibe.label}</div>
-                <div className="text-[11px] text-stone-500 dark:text-stone-400 mt-0.5 truncate">
+                <div className="font-semibold">{vibe.label}</div>
+                <div className="text-[11px] text-stone-500 dark:text-stone-400 mt-0.5 line-clamp-1">
                   {vibe.desc}
                 </div>
               </button>
@@ -203,7 +203,7 @@ export const TraitAssembler: React.FC<TraitAssemblerProps> = ({
       {/* Trait 4: Historical Era */}
       <div className="space-y-2">
         <label className="text-xs font-semibold uppercase tracking-wider text-stone-700 dark:text-stone-300 block">
-          Historical Era & Dialect
+          4. Historical Era & Dialect (The Output Style)
         </label>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
           {eras.map(era => {
@@ -221,7 +221,7 @@ export const TraitAssembler: React.FC<TraitAssemblerProps> = ({
                     : 'border-stone-200 dark:border-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-800'
                 }`}
               >
-                <div>{era.label}</div>
+                <div className="font-semibold">{era.label}</div>
                 <div className="text-[10px] text-stone-500 dark:text-stone-400 mt-0.5 truncate">
                   {era.period}
                 </div>
@@ -235,18 +235,19 @@ export const TraitAssembler: React.FC<TraitAssemblerProps> = ({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
         <div>
           <label className="text-xs font-semibold uppercase tracking-wider text-stone-700 dark:text-stone-300 block mb-1.5">
-            Severity & Venom
+            5. Harshness Level
           </label>
           <div className="flex rounded-md border border-stone-200 dark:border-stone-800 p-0.5 bg-stone-100 dark:bg-stone-800/60">
             {venoms.map(v => (
               <button
                 key={v.id}
                 onClick={() => setSettings(prev => ({ ...prev, venom: v.id }))}
-                className={`flex-1 py-1.5 text-xs font-medium rounded transition-colors whitespace-nowrap ${
+                className={`flex-1 py-1.5 text-xs font-medium rounded transition-colors whitespace-nowrap text-center ${
                   settings.venom === v.id
-                    ? 'bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 shadow-sm'
+                    ? 'bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 shadow-sm font-semibold'
                     : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200'
                 }`}
+                title={v.sub}
               >
                 {v.label}
               </button>
@@ -256,11 +257,11 @@ export const TraitAssembler: React.FC<TraitAssemblerProps> = ({
 
         <div>
           <label className="text-xs font-semibold uppercase tracking-wider text-stone-700 dark:text-stone-300 block mb-1.5">
-            Offender’s Title / Name
+            6. Who are you roasting? (Target Name / Title)
           </label>
           <input
             type="text"
-            placeholder="e.g., Sir Reginald, Colleague, Landlord"
+            placeholder="e.g., My roommate, Dave from accounting, My ex"
             value={settings.targetName}
             onChange={e => setSettings(prev => ({ ...prev, targetName: e.target.value }))}
             className="w-full text-xs px-3 py-2 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-md text-stone-900 dark:text-stone-100 placeholder:text-stone-400 focus:outline-none focus:ring-1 focus:ring-amber-800"
@@ -275,7 +276,7 @@ export const TraitAssembler: React.FC<TraitAssemblerProps> = ({
           className="w-full py-3 px-4 bg-stone-900 hover:bg-stone-800 dark:bg-amber-900 dark:hover:bg-amber-800 text-amber-50 font-cinzel font-bold text-sm tracking-wide rounded-md shadow transition-all flex items-center justify-center gap-2 group"
         >
           <Sparkles className="w-4 h-4 text-amber-400 group-hover:rotate-12 transition-transform" />
-          <span>Assemble & Forge Insult</span>
+          <span>Generate Historical Burn</span>
         </button>
       </div>
     </div>
