@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ArrowDownRight, Feather, Sparkles } from 'lucide-react';
 import { TopNav } from './components/TopNav';
 import { TraitAssembler } from './components/TraitAssembler';
 import { InsultParchmentCard } from './components/InsultParchmentCard';
@@ -6,71 +7,33 @@ import { WitDuelArena } from './components/WitDuelArena';
 import { ModernGrievanceTranslator } from './components/ModernGrievanceTranslator';
 import { CodexOfScoundrels } from './components/CodexOfScoundrels';
 import { GrimoireModal } from './components/GrimoireModal';
-import { GeneratedInsult, LexiconEntry, TraitSettings, Vibe } from './types/insult';
-import { generateInsult, PresetArchetype, ARCHETYPE_PRESETS } from './utils/insultEngine';
+import type { GeneratedInsult, LexiconEntry, TraitSettings, Vibe } from './types/insult';
+import { generateInsult, type PresetArchetype } from './utils/insultEngine';
 import { soundEffects } from './utils/audioSpeech';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<'assembler' | 'duel' | 'translator' | 'codex'>('assembler');
-  const [isDark, setIsDark] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('calumny_theme') === 'dark';
-    }
-    return false;
-  });
-
-  const [settings, setSettings] = useState<TraitSettings>({
-    lazinessLevel: 3,
-    nonsenseLevel: 3,
-    vibe: 'pompous',
-    era: 'elizabethan',
-    venom: 'courtly',
-    targetName: 'Sir Braggart'
-  });
-
-  const [currentInsult, setCurrentInsult] = useState<GeneratedInsult>(() =>
-    generateInsult({
-      lazinessLevel: 3,
-      nonsenseLevel: 3,
-      vibe: 'pompous',
-      era: 'elizabethan',
-      venom: 'courtly',
-      targetName: 'Sir Braggart'
-    })
-  );
-
+  const [isDark, setIsDark] = useState<boolean>(() => typeof window !== 'undefined' && localStorage.getItem('calumny_theme') === 'dark');
+  const [settings, setSettings] = useState<TraitSettings>({ lazinessLevel: 3, nonsenseLevel: 3, vibe: 'pompous', era: 'elizabethan', venom: 'courtly', targetName: 'Sir Braggart' });
+  const [currentInsult, setCurrentInsult] = useState<GeneratedInsult>(() => generateInsult({ lazinessLevel: 3, nonsenseLevel: 3, vibe: 'pompous', era: 'elizabethan', venom: 'courtly', targetName: 'Sir Braggart' }));
   const [savedInsults, setSavedInsults] = useState<GeneratedInsult[]>(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const stored = localStorage.getItem('calumny_grimoire');
-        if (stored) return JSON.parse(stored);
-      } catch {
-        // ignore error
-      }
-    }
-    return [];
+    try {
+      const stored = localStorage.getItem('calumny_grimoire');
+      return stored ? JSON.parse(stored) as GeneratedInsult[] : [];
+    } catch { return []; }
   });
-
   const [isGrimoireOpen, setIsGrimoireOpen] = useState(false);
 
   useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('calumny_theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('calumny_theme', 'light');
-    }
+    document.documentElement.classList.toggle('dark', isDark);
+    localStorage.setItem('calumny_theme', isDark ? 'dark' : 'light');
   }, [isDark]);
 
-  useEffect(() => {
-    localStorage.setItem('calumny_grimoire', JSON.stringify(savedInsults));
-  }, [savedInsults]);
+  useEffect(() => { localStorage.setItem('calumny_grimoire', JSON.stringify(savedInsults)); }, [savedInsults]);
 
   const handleGenerate = () => {
     soundEffects.playGavel();
-    const newInsult = generateInsult(settings);
-    setCurrentInsult(newInsult);
+    setCurrentInsult(generateInsult(settings));
   };
 
   const handleRandomize = () => {
@@ -78,16 +41,14 @@ export default function App() {
     const vibes: Vibe[] = ['pompous', 'debauched', 'treacherous', 'brainless', 'sour', 'miserly'];
     const eras = ['elizabethan', 'jacobean', 'georgian', 'victorian', 'medieval'] as const;
     const venoms = ['gentle', 'courtly', 'scathing'] as const;
-
     const randomSettings: TraitSettings = {
       lazinessLevel: Math.floor(Math.random() * 4) + 1,
       nonsenseLevel: Math.floor(Math.random() * 4) + 1,
       vibe: vibes[Math.floor(Math.random() * vibes.length)],
       era: eras[Math.floor(Math.random() * eras.length)],
       venom: venoms[Math.floor(Math.random() * venoms.length)],
-      targetName: settings.targetName || 'Varlet'
+      targetName: settings.targetName || 'Varlet',
     };
-
     setSettings(randomSettings);
     setCurrentInsult(generateInsult(randomSettings));
   };
@@ -100,22 +61,13 @@ export default function App() {
 
   const handleSelectTermForAssembler = (term: LexiconEntry) => {
     soundEffects.playParchmentRustle();
-    let newLaziness = settings.lazinessLevel;
-    let newNonsense = settings.nonsenseLevel;
-    let newVibe = settings.vibe;
-
-    if (term.primaryTrait === 'laziness') newLaziness = 4;
-    if (term.primaryTrait === 'nonsense') newNonsense = 4;
-    if (term.primaryTrait === 'vibe') newVibe = 'pompous';
-
     const updatedSettings: TraitSettings = {
       ...settings,
       era: term.era,
-      lazinessLevel: newLaziness,
-      nonsenseLevel: newNonsense,
-      vibe: newVibe
+      lazinessLevel: term.primaryTrait === 'laziness' ? 4 : settings.lazinessLevel,
+      nonsenseLevel: term.primaryTrait === 'nonsense' ? 4 : settings.nonsenseLevel,
+      vibe: term.primaryTrait === 'vibe' ? 'pompous' : settings.vibe,
     };
-
     setSettings(updatedSettings);
     setCurrentInsult(generateInsult(updatedSettings));
     setActiveTab('assembler');
@@ -123,156 +75,49 @@ export default function App() {
 
   const handleToggleSave = (insult: GeneratedInsult) => {
     soundEffects.playParchmentRustle();
-    setSavedInsults(prev => {
-      const exists = prev.some(item => item.id === insult.id);
-      if (exists) {
-        return prev.filter(item => item.id !== insult.id);
-      } else {
-        return [insult, ...prev];
-      }
-    });
+    setSavedInsults(previous => previous.some(item => item.id === insult.id)
+      ? previous.filter(item => item.id !== insult.id)
+      : [insult, ...previous]);
   };
 
   const isCurrentInsultSaved = savedInsults.some(item => item.id === currentInsult.id);
+  const tabTitles = { assembler: 'The Insult Forge', duel: 'Wit Duel Arena', translator: 'Grievance Translator', codex: 'Historical Wordbook' };
 
   return (
-    <div className="min-h-screen bg-[#f7f4ee] dark:bg-[#12100e] text-stone-900 dark:text-stone-100 flex flex-col font-sans transition-colors duration-200">
-      {/* 3-Zone Top Navigation Contract */}
-      <TopNav
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        onInstantForge={handleRandomize}
-        savedCount={savedInsults.length}
-        onOpenGrimoire={() => setIsGrimoireOpen(true)}
-        isDark={isDark}
-        setIsDark={setIsDark}
-      />
-
-      {/* Main Content Viewport Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-8">
-        {/* Curatorial Editorial Marquee */}
-        <section className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="text-xs font-cinzel uppercase tracking-widest text-amber-900 dark:text-amber-400 font-bold">
-            Historical Roasts & Satires · 1380 to 1880
-          </div>
-          <h1 className="font-cinzel text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-stone-900 dark:text-stone-100 leading-tight">
-            Historical English Insult Generator
-          </h1>
-          <p className="font-editorial italic text-lg sm:text-xl text-stone-700 dark:text-stone-300 leading-relaxed max-w-2xl mx-auto">
-            Choose their level of laziness, how much nonsense they talk, or their overall vibe in modern English to assemble a hyper-specific, historically authentic old-school burn.
-          </p>
-
-          {/* Interactive Workspace Navigation Tabs */}
-          <div className="pt-2 flex justify-center">
-            <div className="inline-flex items-center gap-1 p-1 bg-stone-200/70 dark:bg-stone-900 rounded-lg border border-stone-300 dark:border-stone-800 text-xs">
-              <button
-                onClick={() => setActiveTab('assembler')}
-                className={`px-3.5 py-1.5 font-medium rounded-md transition-colors whitespace-nowrap ${
-                  activeTab === 'assembler'
-                    ? 'bg-white dark:bg-stone-800 text-stone-900 dark:text-white shadow-sm font-semibold'
-                    : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white'
-                }`}
-              >
-                Insult Generator
-              </button>
-              <button
-                onClick={() => setActiveTab('duel')}
-                className={`px-3.5 py-1.5 font-medium rounded-md transition-colors whitespace-nowrap ${
-                  activeTab === 'duel'
-                    ? 'bg-white dark:bg-stone-800 text-stone-900 dark:text-white shadow-sm font-semibold'
-                    : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white'
-                }`}
-              >
-                Insult Battle Game
-              </button>
-              <button
-                onClick={() => setActiveTab('translator')}
-                className={`px-3.5 py-1.5 font-medium rounded-md transition-colors whitespace-nowrap ${
-                  activeTab === 'translator'
-                    ? 'bg-white dark:bg-stone-800 text-stone-900 dark:text-white shadow-sm font-semibold'
-                    : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white'
-                }`}
-              >
-                Modern Annoyances
-              </button>
-              <button
-                onClick={() => setActiveTab('codex')}
-                className={`px-3.5 py-1.5 font-medium rounded-md transition-colors whitespace-nowrap ${
-                  activeTab === 'codex'
-                    ? 'bg-white dark:bg-stone-800 text-stone-900 dark:text-white shadow-sm font-semibold'
-                    : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white'
-                }`}
-              >
-                Historical Dictionary
-              </button>
+    <div className="flex min-h-screen flex-col bg-[#f8f6f1] font-sans text-stone-900 transition-colors duration-200 dark:bg-[#12110f] dark:text-stone-100">
+      <TopNav activeTab={activeTab} setActiveTab={setActiveTab} onInstantForge={handleRandomize} savedCount={savedInsults.length} onOpenGrimoire={() => setIsGrimoireOpen(true)} isDark={isDark} setIsDark={setIsDark} />
+      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
+        <section className="relative mb-8 overflow-hidden rounded-2xl border border-stone-200 bg-white px-5 py-7 shadow-sm dark:border-stone-800 dark:bg-stone-900/70 sm:px-8 sm:py-9">
+          <div className="pointer-events-none absolute -right-10 -top-16 h-56 w-56 rounded-full bg-amber-100/60 blur-3xl dark:bg-amber-900/10" />
+          <div className="relative mx-auto max-w-3xl text-center">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-amber-900/15 bg-amber-50 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-amber-900 dark:border-amber-200/10 dark:bg-amber-950/30 dark:text-amber-300">
+              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />Historical wit · 1380—1880
+            </div>
+            <h1 className="font-cinzel text-3xl font-extrabold tracking-tight text-stone-950 dark:text-stone-50 sm:text-4xl lg:text-5xl">A sharper sort of insult.</h1>
+            <p className="mx-auto mt-3 max-w-2xl font-editorial text-lg leading-relaxed text-stone-600 dark:text-stone-300 sm:text-xl">
+              Mix a little old-world vocabulary with modern grievances, then forge a burn fit for the history books.
+            </p>
+            <div className="mt-5 flex items-center justify-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-stone-400 dark:text-stone-500">
+              <Feather className="h-3.5 w-3.5" aria-hidden="true" />{tabTitles[activeTab]}<ArrowDownRight className="h-3.5 w-3.5" aria-hidden="true" />
             </div>
           </div>
         </section>
 
-        {/* Tab 1: Trait Assembler & Live Parchment Card */}
         {activeTab === 'assembler' && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* Left: Trait Calibrator */}
-            <div className="lg:col-span-6 space-y-6">
-              <TraitAssembler
-                settings={settings}
-                setSettings={setSettings}
-                onGenerate={handleGenerate}
-                onSelectArchetype={handleSelectArchetype}
-                onRandomize={handleRandomize}
-              />
-            </div>
-
-            {/* Right: The Parchment Warrant Display */}
-            <div className="lg:col-span-6 space-y-6">
-              <InsultParchmentCard
-                insult={currentInsult}
-                isSaved={isCurrentInsultSaved}
-                onToggleSave={handleToggleSave}
-              />
-            </div>
+          <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-12 xl:gap-8">
+            <div className="xl:col-span-6"><TraitAssembler settings={settings} setSettings={setSettings} onGenerate={handleGenerate} onSelectArchetype={handleSelectArchetype} onRandomize={handleRandomize} /></div>
+            <div className="xl:col-span-6 xl:sticky xl:top-24"><InsultParchmentCard insult={currentInsult} isSaved={isCurrentInsultSaved} onToggleSave={handleToggleSave} /></div>
           </div>
         )}
-
-        {/* Tab 2: Wit Duel Arena */}
         {activeTab === 'duel' && <WitDuelArena />}
-
-        {/* Tab 3: Modern Grievance Transmuter */}
         {activeTab === 'translator' && <ModernGrievanceTranslator />}
-
-        {/* Tab 4: Lexicon Codex */}
-        {activeTab === 'codex' && (
-          <CodexOfScoundrels onSelectTermForAssembler={handleSelectTermForAssembler} />
-        )}
+        {activeTab === 'codex' && <CodexOfScoundrels onSelectTermForAssembler={handleSelectTermForAssembler} />}
       </main>
-
-      {/* Grimoire Modal */}
-      <GrimoireModal
-        isOpen={isGrimoireOpen}
-        onClose={() => setIsGrimoireOpen(false)}
-        savedInsults={savedInsults}
-        onRemoveInsult={id => setSavedInsults(prev => prev.filter(i => i.id !== id))}
-        onClearAll={() => setSavedInsults([])}
-      />
-
-      {/* Institutional Archival Footer */}
-      <footer className="mt-auto border-t border-stone-300 dark:border-stone-800 bg-[#f7f4ee] dark:bg-[#151210] py-8 text-xs text-stone-500 dark:text-stone-400 transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span className="font-cinzel font-bold text-stone-800 dark:text-stone-200">
-              The Grand Lexicon of Calumny
-            </span>
-            <span aria-hidden="true">·</span>
-            <span>Grounded in Elizabethan, Georgian & Victorian Lexicography</span>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span>Sources: Shakespeare First Folio</span>
-            <span aria-hidden="true">·</span>
-            <span>Grose’s 1811 Vulgar Tongue</span>
-            <span aria-hidden="true">·</span>
-            <span>Dekker’s Gull’s Hornbook</span>
-          </div>
+      <GrimoireModal isOpen={isGrimoireOpen} onClose={() => setIsGrimoireOpen(false)} savedInsults={savedInsults} onRemoveInsult={id => setSavedInsults(previous => previous.filter(item => item.id !== id))} onClearAll={() => setSavedInsults([])} />
+      <footer className="mt-auto border-t border-stone-200 bg-white/70 py-6 text-xs text-stone-500 dark:border-stone-800 dark:bg-stone-950/40 dark:text-stone-400">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 text-center sm:flex-row sm:px-6 sm:text-left lg:px-8">
+          <span className="font-cinzel font-bold text-stone-700 dark:text-stone-200">The Grand Lexicon of Calumny</span>
+          <span>Inspired by historical English lexicons · Built for good-humoured roasts</span>
         </div>
       </footer>
     </div>
